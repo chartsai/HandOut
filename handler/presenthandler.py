@@ -26,7 +26,12 @@ class QueryPresentHandler(BaseHandler):
 
 class ViewPresentHandler(BaseHandler):
     def get(self, present_id):
-        self.write("<h1>Presentation Detail!!</h1>")
+        present = Presentation.by_p_key(present_id, self.sql_session).scalar()
+        present_file = FileList.by_present_id(present_id, self.sql_session).scalar()
+        self.render('viewpresent.html',
+                        title = present.title,
+                        owner = present.owner,
+                        file_path = '/download/%s/%s' % (present_file.key, present_file.filename))
 
 
 class SubmitPresentHandler(BaseHandler):
