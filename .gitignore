@@ -59,5 +59,11 @@ target/
 # Upload File
 file/
 
+# Windows temp file
+Thumbs.db
+
+# OSX temp file
+.DS_Store
+
 # Config File
 config.py
