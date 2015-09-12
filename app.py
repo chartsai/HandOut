@@ -47,17 +47,21 @@ def check_db():
 def make_app():
     return Application(
         handlers = [
+            # Index Page
             (r'/', handler.IndexHandler),
             # (r'/login/?', handler.LoginHandler),
             # (r'/logout/?', handler.LogoutHandler),
             # (r'/signup/?', handler.SignupHandler),
 
-            (r'/present/?', handler.SubmitPresentHandler),
-            (r'/present(?:/([0-9]+))?/?', handler.SubmitPresentHandler),
+            # Query Presentation
+            (r'/present/?', handler.QueryPresentHandler),
+            # View Presentation
+            (r'/present(?:/([0-9]+))?/?', handler.ViewPresentHandler),
+            # Submit new or exist Presentation
             (r'/present/submit(?:/([0-9]+))?/?', handler.SubmitPresentHandler),
 
-            # Att and File
-            (r'/download/(.*)', FileHandler, {"path": os.path.join(os.path.dirname(__file__), '../../file')})
+            # Download ppt
+            (r'/download/(.*)', FileHandler, {'path': os.path.join(os.path.dirname(__file__), 'file')})
         ],
         template_path = os.path.join(os.path.dirname(__file__), 'template'),
         static_path = os.path.join(os.path.dirname(__file__), 'static'),
