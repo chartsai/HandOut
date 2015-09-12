@@ -24,3 +24,12 @@ TODO...
 * `python -m HandOut.app`  # start server
 * `python -m HandOut.creatDB` # Create Table
 * `python -m HandOut.DropDB` # Drop Table
+
+# URL memo
+
+* PREFIX/present # Query all presentation around 1 KM.
+* PREFIX/present/[id] # preview a presentation.
+* PREFIX/present/submit # Upload a new presentation
+* PREFIX/present/submit/[id] # Edit a exist presentation
+
+* Current download link: PREFIX/download/[uuid]/[real_file_name] # A URL for download.

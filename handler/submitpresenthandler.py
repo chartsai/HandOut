@@ -12,10 +12,6 @@ from __future__ import unicode_literals
 
 from .basehandler import BaseHandler
 
-
-class PresentationHandler(BaseHandler):
-    def get(self):
-        pass
-
-    def post(self):
-        pass
+class NewPresentHandler(BaseHandler):
+    def get(self,  *a, **kwargs):
+        self.render('newpresent.html')
