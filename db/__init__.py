@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 
 from tornado.options import options
 
-version = '-100'
+version = '-101'
 
 
 # creat engine
