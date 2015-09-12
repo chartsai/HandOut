@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 
 from tornado.options import options
 
-version = '-101'
+version = '-102'
 
 
 # creat engine
@@ -45,3 +45,4 @@ class SessionGen(object):
 
 from .system import System
 from .filelist import FileList
+from .presentation import Presentation
