@@ -23,7 +23,7 @@ from sqlalchemy.exc import ProgrammingError
 from sqlalchemy.orm.exc import NoResultFound
 
 from tornado.ioloop import IOLoop
-from tornado.web import Application
+from tornado.web import Application, StaticFileHandler
 from tornado.httpserver import HTTPServer
 from tornado.options import options
 
@@ -61,7 +61,10 @@ def make_app():
             (r'/present/submit(?:/([0-9]+))?/?', handler.SubmitPresentHandler),
 
             # Download ppt
-            (r'/download/(.*)', FileHandler, {'path': os.path.join(os.path.dirname(__file__), 'file')})
+            (r'/download/(.*)', FileHandler, {'path': os.path.join(os.path.dirname(__file__), 'file')}),
+
+            # Debug
+            (r'/debug/(.*)', StaticFileHandler, {'path': os.path.join(os.path.dirname(__file__), 'debug')})
         ],
         template_path = os.path.join(os.path.dirname(__file__), 'template'),
         static_path = os.path.join(os.path.dirname(__file__), 'static'),
