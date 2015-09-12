@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""HandOut announce handlers.
-
-FileHandler.
+"""HandOut FileHandler handlers.
 
 TODO: Fix bug.
 """
@@ -12,7 +10,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from . import BaseHandler
+from .basehandler import BaseHandler
 from ..db import FileList
 
 import re
