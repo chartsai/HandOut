@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from . import BaseHandler
 from ..db import Presentation, FileList
 
-# import re
+import re
 import os
 import uuid
 import shutil
@@ -34,6 +34,8 @@ class ViewPresentHandler(BaseHandler):
                         owner = present.owner,
                         file_path = '/download/%s/%s' % (present_file.key, present_file.filename))
 
+
+_file_type_re = re.compile(r'^.*[.](.*)$')
 
 class SubmitPresentHandler(BaseHandler):
     def initialize(self):
@@ -108,8 +110,10 @@ class SubmitPresentHandler(BaseHandler):
 
         # Add new ppt file
         if self.kw.get('presentation'):
+            # check file_type is pptx
+            if not self._check_file_type_by_name(self.kw['presentation']['filename']):
+                raise self.HTTPError(400)
             self.kw['presentation']['key'] = uuid.uuid1().hex
-            # TODO : get file_type
             self.kw['presentation']['file_type'] = 'pptx'
             self.kw['presentation']['present_id'] = present_id
 
@@ -124,3 +128,7 @@ class SubmitPresentHandler(BaseHandler):
 
         self.sql_session.commit()
         self.redirect('/present/%s' % present_id)
+
+    def _check_file_type_by_name(self, filename):
+        m = _file_type_re.match(filename)
+        return m and m.group(1) == 'pptx'
