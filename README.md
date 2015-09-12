@@ -22,8 +22,8 @@ TODO...
 
 # Commands
 * `python -m HandOut.app`  # start server
-* `python -m HandOut.creatDB` # Create Table
-* `python -m HandOut.DropDB` # Drop Table
+* `python -m HandOut.initDB` # Init Database.Create All Table.
+* `python -m HandOut.DropDB` # Drop Database.Delete All Table.
 
 # URL memo
 
