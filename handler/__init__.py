@@ -27,4 +27,4 @@ class NotFoundHandler(BaseHandler):
 
 from .userhandler import LoginHandler, LogoutHandler, SignupHandler
 from .filehandler import FileHandler
-from .submitpresenthandler import SubmitPresentHandler
+from .presentation import QueryPresentHandler, ViewPresentHandler, SubmitPresentHandler

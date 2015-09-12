@@ -61,7 +61,7 @@ def make_app():
             (r'/present/submit(?:/([0-9]+))?/?', handler.SubmitPresentHandler),
 
             # Download ppt
-            (r'/download/(.*)', FileHandler, {'path': os.path.join(os.path.dirname(__file__), 'file')}),
+            (r'/download/(.*)', handler.FileHandler, {'path': os.path.join(os.path.dirname(__file__), 'file')}),
 
             # Debug
             (r'/debug/(.*)', StaticFileHandler, {'path': os.path.join(os.path.dirname(__file__), 'debug')})
