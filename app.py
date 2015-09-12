@@ -13,7 +13,7 @@ from __future__ import unicode_literals
 from .util.parse_config import parse_config
 parse_config()
 
-from .handler import route, NotFoundHandler
+from . import handler
 from .db import SessionGen, System
 from .db import version as db_version
 
@@ -23,7 +23,7 @@ from sqlalchemy.exc import ProgrammingError
 from sqlalchemy.orm.exc import NoResultFound
 
 from tornado.ioloop import IOLoop
-from tornado.web import Application
+from tornado.web import Application, StaticFileHandler
 from tornado.httpserver import HTTPServer
 from tornado.options import options
 
@@ -46,7 +46,26 @@ def check_db():
 
 def make_app():
     return Application(
-        handlers = route,
+        handlers = [
+            # Index Page
+            (r'/', handler.IndexHandler),
+            # (r'/login/?', handler.LoginHandler),
+            # (r'/logout/?', handler.LogoutHandler),
+            # (r'/signup/?', handler.SignupHandler),
+
+            # Query Presentation
+            (r'/present/?', handler.QueryPresentHandler),
+            # View Presentation
+            (r'/present(?:/([0-9]+))?/?', handler.ViewPresentHandler),
+            # Submit new or exist Presentation
+            (r'/present/submit(?:/([0-9]+))?/?', handler.SubmitPresentHandler),
+
+            # Download ppt
+            (r'/download/(.*)', FileHandler, {'path': os.path.join(os.path.dirname(__file__), 'file')}),
+
+            # Debug
+            (r'/debug/(.*)', StaticFileHandler, {'path': os.path.join(os.path.dirname(__file__), 'debug')})
+        ],
         template_path = os.path.join(os.path.dirname(__file__), 'template'),
         static_path = os.path.join(os.path.dirname(__file__), 'static'),
         cookie_secret = options.cookie_secret,
@@ -54,7 +73,7 @@ def make_app():
         xsrf_cookies = True,
         debug = options.server_debug,
         autoreload = False,
-        default_handler_class = NotFoundHandler,
+        default_handler_class = handler.NotFoundHandler,
     )
 
 

@@ -28,15 +28,3 @@ class NotFoundHandler(BaseHandler):
 from .userhandler import LoginHandler, LogoutHandler, SignupHandler
 from .filehandler import FileHandler
 from .submitpresenthandler import SubmitPresentHandler
-
-route = [
-    (r'/', IndexHandler),
-    (r'/login/?', LoginHandler),
-    (r'/logout/?', LogoutHandler),
-    (r'/signup/?', SignupHandler),
-
-    (r'/present/submit(?:/([0-9]+))?/?', SubmitPresentHandler),
-
-    # Att and File
-    (r'/file/(.*)', FileHandler, {"path": os.path.join(os.path.dirname(__file__), '../../file')})
-]

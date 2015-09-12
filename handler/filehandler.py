@@ -23,7 +23,7 @@ from datetime import datetime
 
 import tornado
 from tornado import gen
-from tornado.web import stream_request_body, StaticFileHandler
+from tornado.web import StaticFileHandler
 
 
 def _get_content_type(filename, real_filename=''):
