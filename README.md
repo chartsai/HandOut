@@ -6,11 +6,19 @@ Welcome to <b>HandOut</b>!
 * python 2.7+
 
 # Install
+## tornado, sqlalchemy, mysql-connector
+### Windows, Mac, Linux
 ```
 pip install -U tornado
 pip install -U sqlalchemy
 pip install -U --allow-external mysql-connector-python mysql-connector-python
 ```
+## unoconv
+### Ubuntu
+```
+apt-get install unoconv
+```
+
 
 ### Require Package versions
 * python-tornado 4.2.1

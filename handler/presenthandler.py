@@ -10,11 +10,11 @@ from __future__ import unicode_literals
 from . import BaseHandler
 from ..db import Presentation, FileList
 
-# import re
+import re
 import os
 import uuid
 import shutil
-# import subprocess
+import subprocess
 # import mimetypes
 # from datetime import datetime
 
@@ -34,6 +34,8 @@ class ViewPresentHandler(BaseHandler):
                         owner = present.owner,
                         file_path = '/download/%s/%s' % (present_file.key, present_file.filename))
 
+
+_file_type_re = re.compile(r'^(.*)[.](.*)$')
 
 class SubmitPresentHandler(BaseHandler):
     def initialize(self):
@@ -108,9 +110,12 @@ class SubmitPresentHandler(BaseHandler):
 
         # Add new ppt file
         if self.kw.get('presentation'):
+            m = _file_type_re.match(self.kw['presentation']['filename'])
+            if not m or not (m.group(2) in ['pptx','ppt']):
+                raise self.HTTPError(400)
             self.kw['presentation']['key'] = uuid.uuid1().hex
-            # TODO : get file_type
-            self.kw['presentation']['file_type'] = 'pptx'
+            self.kw['presentation']['filename'] = m.group(1)
+            self.kw['presentation']['file_type'] = m.group(2)
             self.kw['presentation']['present_id'] = present_id
 
             new_file = FileList(**self.kw['presentation'])
@@ -118,8 +123,12 @@ class SubmitPresentHandler(BaseHandler):
             if os.path.exists(file_hash_folder):
                 raise self.HTTPError(500)
             os.makedirs(file_hash_folder)
-            with open(os.path.join(file_hash_folder, new_file.filename), 'wb') as f:
+            real_file_name = os.path.join(file_hash_folder, '%s.%s' % (new_file.filename, new_file.file_type))
+            with open(real_file_name, 'wb') as f:
                 f.write(self.kw['presentation']['body'])
+            # Convert ppt or pptx to odp
+            subprocess.call('unoconv -f odp \'%s\'' % real_file_name, shell=True)
+
             self.sql_session.add(new_file)
 
         self.sql_session.commit()
