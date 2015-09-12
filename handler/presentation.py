@@ -30,8 +30,15 @@ class ViewPresentHandler(BaseHandler):
 
 
 class SubmitPresentHandler(BaseHandler):
-    def get(self):
+    def get(self, present_id):
         self.write("<h1>Presentation Submit!!</h1>")
 
-    def post(self):
-        pass
+    def post(self, present_id):
+        if present_id:
+            raise self.HTTPError(404)
+        if not self.request.files.get('file'):
+            raise self.HTTPError(400)
+
+        filename = self.request.files['file'][0]['filename']
+        body = self.request.files['file'][0]['body']
+        content_type = self.request.files['file'][0]['content_type']
