@@ -14,7 +14,7 @@ import re
 import os
 import uuid
 import shutil
-# import subprocess
+import subprocess
 # import mimetypes
 # from datetime import datetime
 
@@ -35,7 +35,7 @@ class ViewPresentHandler(BaseHandler):
                         file_path = '/download/%s/%s' % (present_file.key, present_file.filename))
 
 
-_file_type_re = re.compile(r'^.*[.](.*)$')
+_file_type_re = re.compile(r'^(.*)[.](.*)$')
 
 class SubmitPresentHandler(BaseHandler):
     def initialize(self):
@@ -110,11 +110,12 @@ class SubmitPresentHandler(BaseHandler):
 
         # Add new ppt file
         if self.kw.get('presentation'):
-            # check file_type is pptx
-            if not self._check_file_type_by_name(self.kw['presentation']['filename']):
+            m = _file_type_re.match(self.kw['presentation']['filename'])
+            if not m or not (m.group(2) in ['pptx','ppt']):
                 raise self.HTTPError(400)
             self.kw['presentation']['key'] = uuid.uuid1().hex
-            self.kw['presentation']['file_type'] = 'pptx'
+            self.kw['presentation']['filename'] = m.group(1)
+            self.kw['presentation']['file_type'] = m.group(2)
             self.kw['presentation']['present_id'] = present_id
 
             new_file = FileList(**self.kw['presentation'])
@@ -122,13 +123,13 @@ class SubmitPresentHandler(BaseHandler):
             if os.path.exists(file_hash_folder):
                 raise self.HTTPError(500)
             os.makedirs(file_hash_folder)
-            with open(os.path.join(file_hash_folder, new_file.filename), 'wb') as f:
+            real_file_name = os.path.join(file_hash_folder, '%s.%s' % (new_file.filename, new_file.file_type))
+            with open(real_file_name, 'wb') as f:
                 f.write(self.kw['presentation']['body'])
+            # Convert ppt or pptx to odp
+            subprocess.call('unoconv -f odp \'%s\'' % real_file_name, shell=True)
+
             self.sql_session.add(new_file)
 
         self.sql_session.commit()
         self.redirect('/present/%s' % present_id)
-
-    def _check_file_type_by_name(self, filename):
-        m = _file_type_re.match(filename)
-        return m and m.group(1) == 'pptx'
