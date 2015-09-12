@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 
-{% head body %}
+{% block head %}
 <!-- TODO head-->
 
 {% end %}
 
 {% block body %}
 <form method=post enctype='multipart/form-data' action='/present/submit/{{ present_id }}'>
+  {% module xsrf_form_html() %}
   <input type='text' name='title' placeholder='Presentation Title(Option)' value='{{ title }}'/><br>
   <input type='text' name='owner' placeholder='Owner(Option)' value='{{ owner }}'/><br>
   <input type='file' name='presentation'/><br>
   <!-- TODO add lat, lng-->
-  <input type='submit'>Submit</input><br>
+  <input type='submit'/><br>
 </form>
 
 {% end %}
