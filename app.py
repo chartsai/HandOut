@@ -13,7 +13,7 @@ from __future__ import unicode_literals
 from .util.parse_config import parse_config
 parse_config()
 
-from .handler import route, NotFoundHandler
+from . import handler
 from .db import SessionGen, System
 from .db import version as db_version
 
@@ -46,7 +46,19 @@ def check_db():
 
 def make_app():
     return Application(
-        handlers = route,
+        handlers = [
+            (r'/', handler.IndexHandler),
+            # (r'/login/?', handler.LoginHandler),
+            # (r'/logout/?', handler.LogoutHandler),
+            # (r'/signup/?', handler.SignupHandler),
+
+            (r'/present/?', handler.SubmitPresentHandler),
+            (r'/present(?:/([0-9]+))?/?', handler.SubmitPresentHandler),
+            (r'/present/submit(?:/([0-9]+))?/?', handler.SubmitPresentHandler),
+
+            # Att and File
+            (r'/download/(.*)', FileHandler, {"path": os.path.join(os.path.dirname(__file__), '../../file')})
+        ],
         template_path = os.path.join(os.path.dirname(__file__), 'template'),
         static_path = os.path.join(os.path.dirname(__file__), 'static'),
         cookie_secret = options.cookie_secret,
@@ -54,7 +66,7 @@ def make_app():
         xsrf_cookies = True,
         debug = options.server_debug,
         autoreload = False,
-        default_handler_class = NotFoundHandler,
+        default_handler_class = handler.NotFoundHandler,
     )
 
 
