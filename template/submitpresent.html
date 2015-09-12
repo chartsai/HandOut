@@ -3,6 +3,11 @@
 {% block head %}
 <!-- TODO head-->
 
+<style type="text/css">
+  html, body { height: 100%; margin: 0; padding: 0; }
+  #map { height: 50%; width: 30%}
+</style>
+
 {% end %}
 
 {% block body %}
@@ -11,8 +16,57 @@
   <input type='text' name='title' placeholder='Presentation Title(Option)' value='{{ title }}'/><br>
   <input type='text' name='owner' placeholder='Owner(Option)' value='{{ owner }}'/><br>
   <input type='file' name='presentation'/><br>
-  <!-- TODO add lat, lng-->
+  <input type='text' name='lat' id='lat' value='0' hidden="true"></input>
+  <input type='text' name='lng' id='lng' value='0' hidden="true"></input>
   <input type='submit'/><br>
 </form>
+<div id="map"></div>
+
+<script>
+
+  function updateLatLng(lat, lng) {
+    // updateLatLng
+    document.getElementById('lat').value=lat;
+    document.getElementById('lng').value=lng;
+
+    console.debug(lat + "," + lng);
+  }
+
+  var map;
+  function initMap() {
+
+    var current_location;
+    getLocation(function(position) {
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+      current_location = new google.maps.LatLng(lat, lng);
+      updateLatLng(lat, lng);
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: current_location,
+        zoom: 16
+      });
+
+      var marker = new google.maps.Marker({
+        position: current_location,
+        map: map,
+        draggable: true,
+        title: 'Hello World!'
+      });
+      marker.addListener('dragend', toggleDragEnd);
+
+      function toggleDragEnd() {
+        var latlng = marker.getPosition();
+        var lat = latlng.lat();
+        var lng = latlng.lng();
+        updateLatLng(lat, lng);
+      }
+    });
+  }
+</script>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAJWANy1vD0TcPFB0X5bX3Vi4Qyi4bYPw&callback=initMap" >
+</script>
 
 {% end %}
