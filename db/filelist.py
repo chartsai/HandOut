@@ -25,15 +25,15 @@ class FileList(Base):
 
     key = Column(CHAR(40, collation='utf8_unicode_ci'), primary_key=True)
     filename = Column(TEXT(charset='utf8'), nullable=False)
-    content_type = Column(TEXT(charset='utf8'), nullable=False)
-    present_key = Column(CHAR(40, collation='utf8_unicode_ci'), nullable=False)
+    file_type = Column(CHAR(10, collation='utf8_unicode_ci'))
+    present_id = Column(INTEGER, nullable=False)
     created = Column(TIMESTAMP, default=datetime.utcnow)
     
     def __init__(self, **kwargs):
         self.key = kwargs['key']
         self.filename = kwargs['filename']
-        self.content_type = kwargs['content_type']
-        self.present_key = kwargs['present_key']
+        self.file_type = kwargs['file_type']
+        self.present_id = kwargs['present_id']
 
     def __repr__(self):
         return 'FileList(%s ,%s)' % \
@@ -45,9 +45,9 @@ class FileList(Base):
         return q.filter(cls.key == key)
 
     @classmethod
-    def by_present_key(cls, present_key, sql_session):
+    def by_present_id(cls, present_id, sql_session):
         q = sql_session.query(cls)
-        return q.filter(cls.present_key == present_key)
+        return q.filter(cls.present_id == present_id)
 
     def to_dict(self):
         return {

@@ -12,8 +12,10 @@ from __future__ import unicode_literals
 
 from . import Base
 
+from datetime import datetime
+
 from sqlalchemy import Column
-from sqlalchemy.dialects.mysql import INTEGER, DOUBLE, VARCHAR, TEXT
+from sqlalchemy.dialects.mysql import INTEGER, DOUBLE, VARCHAR, TEXT, TIMESTAMP
 
 
 class Presentation(Base):
@@ -34,7 +36,7 @@ class Presentation(Base):
         self.lng = kwargs['lng']
 
     @classmethod
-    def by_pKey(cls, key, sql_session):
+    def by_p_key(cls, p_key, sql_session):
         q = sql_session.query(cls)
-        q = q.filter(cls.pKey == pKey)
+        q = q.filter(cls.p_key == p_key)
         return q
