@@ -1,0 +1,103 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""HandOut announce handlers.
+
+FileHandler.
+
+TODO: Fix bug.
+"""
+
+from __future__ import absolute_import
+from __future__ import print_function
+from __future__ import unicode_literals
+
+from . import BaseHandler
+from ..db import FileList
+
+import re
+import os
+import uuid
+import shutil
+import subprocess
+import mimetypes
+from datetime import datetime
+
+import tornado
+from tornado import gen
+from tornado.web import stream_request_body, StaticFileHandler
+
+
+def _get_content_type(filename, real_filename=''):
+    _content_type, encoding = mimetypes.guess_type(real_filename)
+    if not _content_type:
+        _content_type = subprocess.check_output('file -b --mime-type %s' % filename, shell=True)
+        _content_type = re.search(r'([\S]+)', _content_type).group()
+    return _content_type
+
+
+class FileHandler(StaticFileHandler, BaseHandler):
+    @gen.coroutine
+    def get(self, *arg, **kargs):
+        self.download = bool(self.get_argument('download', False))
+        yield super(FileHandler, self).get(*arg, **kargs)
+
+    # @BaseHandler.check_is_group_user('Announcement administrator')
+    def post(self, path):
+        if path:
+            raise self.HTTPError(404)
+        if not self.request.files.get('file'):
+            raise self.HTTPError(400)
+
+        filename = self.request.files['file'][0]['filename']
+        body = self.request.files['file'][0]['body']
+        content_type = self.request.files['file'][0]['content_type']
+
+        self.tmp_file_name = '%s' % uuid.uuid1().hex
+        try:
+            with open('file/tmp/%s' % self.tmp_file_name, 'wb') as f:
+                f.write(body)
+
+            _content_type = _get_content_type('file/tmp/%s' % self.tmp_file_name, filename)
+            content_type = _content_type if _content_type else content_type
+
+            new_file = TempFileList(self.tmp_file_name, filename, content_type, self.current_user.key)
+            self.sql_session.add(new_file)
+        except:
+            os.remove('file/tmp/%s' % self.tmp_file_name)
+            raise self.HTTPError(403)
+
+        self.sql_session.commit()
+        self.write({'file_name':filename,'key':self.tmp_file_name})
+
+    # @BaseHandler.check_is_group_user('Announcement administrator')
+    def delete(self, key):
+        if not re.match(r'^[a-zA-Z0-9]+$', key):
+            raise self.HTTPError(403)
+        file = AttachmentList.by_key(key, self.sql_session).scalar()
+        if not file:
+            raise self.HTTPError(404)
+
+        # Because onupdate must be call , or you need to give the value.
+        q = Announce.by_id(file.ann_id, self.sql_session)
+        ann = q.scalar()
+        q.update({'search' : ann.search})
+
+        shutil.rmtree('file/%s' % file.key)
+        AttachmentList.by_key(key, self.sql_session).delete()
+        self.sql_session.commit()
+
+        self.write({'success':True})
+
+    def get_content_type(self):
+        """Returns the ``Content-Type`` header to be used for this request.
+        if self.download is true, return application/octet-stream to ask 
+        the browser to download the file instead of trying to open it.
+        """
+        if self.download:
+            return 'application/octet-stream'
+        else:
+            mime_type = super(FileHandler, self).get_content_type()
+            if not mime_type:
+                mime_type = _get_content_type(self.absolute_path)
+            return mime_type
