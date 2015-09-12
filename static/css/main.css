@@ -32,11 +32,10 @@ body {
 }
 
 /* Customize container */
-@media (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 800px;
   }
-}
+
 .container-narrow > hr {
   margin: 30px 0;
 }
@@ -78,11 +77,40 @@ body {
   }
 }
 
+.btndiv {
+  margin: 80px auto 80px auto;
+}
+
+.btndesign {
+  display: inline-block;
+  width: 49%;
+}
+
 .btnstyle {
   display: inline-block;
   width: 49%;
   text-align: center;
 }
+
+.jumbo {
+  text-align: center;
+}
+
+.logodesign {
+  margin-top: 70px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+
+
+
 
 
 
