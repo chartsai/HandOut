@@ -5,22 +5,32 @@ Welcome to <b>HandOut</b>!
 * MySQLite server
 * python 2.7+
 
-# Install
-## tornado, sqlalchemy, mysql-connector
-### Windows, Mac, Linux
+# Install Required Packages
+## tornado
 ```
 pip install -U tornado
+```
+## sqlalchemy
+```
 pip install -U sqlalchemy
+```
+## mysql-connector
+```
 pip install -U --allow-external mysql-connector-python mysql-connector-python
 ```
+
 ## unoconv
 ### Ubuntu
 ```
 apt-get install unoconv
 ```
+### OS X
+```
+brew install unoconv
+```
 
-
-### Require Package versions
+### (Note: Required Package versions)
+* unoconv 0.6
 * python-tornado 4.2.1
 * python-sqlalchemy 1.0.8
 * python-mysql.connector 2.0.4
