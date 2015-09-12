@@ -21,7 +21,8 @@ import shutil
 
 class QueryPresentHandler(BaseHandler):
     def get(self):
-        self.write("<h1>List of Presentation!!</h1>")
+        presents = self.sql_session.query(Presentation).all()
+        self.render('querypresent.html', presents = presents)
 
 
 class ViewPresentHandler(BaseHandler):
