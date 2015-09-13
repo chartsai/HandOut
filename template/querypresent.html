@@ -7,11 +7,11 @@
 
 {% block body %}
   {% for i in presents %}
-	
-	<div>
+  <div>
+    <a href="/present/{{i.p_key}}"><h3>Title: {{i.title}} Owner: {{i.owner}} Distance: {{i.distance}}</h3></a>
+
     <a href="/present/{{i.p_key}}">
     <h3>Title: {{i.title}} Owner: {{i.owner}}</h3></a>
-    </div>
-    
+  </div>
   {% end %}
 {% end %}
