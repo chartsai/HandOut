@@ -18,3 +18,7 @@
  	color: #2f3592;
  	display: inline-block;
  }
+
+ p {
+ 	display: none;
+ }
