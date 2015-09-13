@@ -21,8 +21,11 @@
   {% for i in presents %}
 	
 	<div class="slidecase">
-    <a href="/present/{{i.p_key}}">
-    <h3>Title: {{i.title}} <br /> Owner: {{i.owner}}</h3></a>
+    <a href="/present/{{i.p_key}}"><h3>
+    	Title: {{i.title}} <br />
+    	Owner: {{i.owner}} <br />
+		Distance: {{i.distance}}
+    </h3></a>
     </div>
     
   {% end %}
