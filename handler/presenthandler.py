@@ -173,16 +173,17 @@ class SubmitPresentHandler(BaseHandler):
                 cmd_thread = _async_command('unoconv -f odp \'%s\'' % real_file_name)
                 cmd_thread.start()
                 while not cmd_thread.end:
-                    print('GG')
                     yield tornado.gen.Task(tornado.ioloop.IOLoop.instance().add_timeout, time.time() + 1)
-                # subprocess.call('unoconv -f odp \'%s\'' % real_file_name, shell=True)
             if m.group(2) != 'pdf':
                 cmd_thread = _async_command('unoconv -f pdf \'%s\'' % real_file_name)
                 cmd_thread.start()
                 while not cmd_thread.end:
-                    print('GG2')
                     yield tornado.gen.Task(tornado.ioloop.IOLoop.instance().add_timeout, time.time() + 1)
-                # subprocess.call('unoconv -f pdf \'%s\'' % real_file_name, shell=True)
+            real_file_base_name = os.path.join(file_hash_folder, new_file.filename)
+            cmd_thread = _async_command('convert -density 150 \'%s.pdf[0]\' -quality 90 \'%s.png\'' % (real_file_base_name, real_file_base_name))
+            cmd_thread.start()
+            while not cmd_thread.end:
+                yield tornado.gen.Task(tornado.ioloop.IOLoop.instance().add_timeout, time.time() + 1)
 
             self.sql_session.add(new_file)
 
