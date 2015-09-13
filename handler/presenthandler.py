@@ -62,12 +62,16 @@ class QueryPresentHandler(BaseHandler):
         elif api_type[1:] == 'json':
             return_data = []
             for present in presents:
+                upload_file = FileList.by_present_id(present.p_key, self.sql_session).scalar()
+                file_url = '/download/' + upload_file.key + '/' + upload_file.filename + '.' + upload_file.file_type
+
                 return_data.append({
                     'title': present.title,
                     'owner': present.owner,
                     'distance': present.distance_string,
                     'created': present.created.strftime("%Y-%m-%d %H:%M"),
                     'updated': present.updated.strftime("%Y-%m-%d %H:%M"),
+                    'file_url': file_url,
                     'lat': str(present.lat),
                     'lng': str(present.lng)}
                 )
@@ -207,7 +211,7 @@ class SubmitPresentHandler(BaseHandler):
 
             self.sql_session.add(new_file)
 
-            
+
 
         self.sql_session.commit()
         self.redirect('/present/%s' % present_id)
