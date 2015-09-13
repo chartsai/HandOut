@@ -57,21 +57,23 @@ class QueryPresentHandler(BaseHandler):
             lat2 = RAD_K*presents[i].lat
             lng2 = RAD_K*presents[i].lng
             presents[i].distance_string = self._distance_string(lat2, lng2)
+
+            upload_file = FileList.by_present_id(presents[i].p_key, self.sql_session).scalar()
+            presents[i].file_url = '/download/' + upload_file.key + '/' + upload_file.filename + '.' + upload_file.file_type
+            presents[i].img_url = '/download/' + upload_file.key + '/' + upload_file.filename + '.png'
         if api_type == None:
             self.render('querypresent.html', presents = presents)
         elif api_type[1:] == 'json':
             return_data = []
             for present in presents:
-                upload_file = FileList.by_present_id(present.p_key, self.sql_session).scalar()
-                file_url = '/download/' + upload_file.key + '/' + upload_file.filename + '.' + upload_file.file_type
-
                 return_data.append({
                     'title': present.title,
                     'owner': present.owner,
                     'distance': present.distance_string,
                     'created': present.created.strftime("%Y-%m-%d %H:%M"),
                     'updated': present.updated.strftime("%Y-%m-%d %H:%M"),
-                    'file_url': file_url,
+                    'file_url': present.file_url,
+                    'img_url': present.img_url,
                     'lat': str(present.lat),
                     'lng': str(present.lng)}
                 )
@@ -211,8 +213,6 @@ class SubmitPresentHandler(BaseHandler):
                 yield tornado.gen.Task(tornado.ioloop.IOLoop.instance().add_timeout, time.time() + 1)
 
             self.sql_session.add(new_file)
-
-
 
         self.sql_session.commit()
         self.redirect('/present/%s' % present_id)

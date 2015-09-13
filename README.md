@@ -19,10 +19,11 @@ pip install -U sqlalchemy
 pip install -U --allow-external mysql-connector-python mysql-connector-python
 ```
 
-## unoconv
+## unoconv imagemagick
 ### Ubuntu
 ```
 apt-get install unoconv
+apt-get install imagemagick
 ```
 ### OS X
 ```
