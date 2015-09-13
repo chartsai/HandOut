@@ -3,6 +3,12 @@
 {% block head %}
 <!-- TODO head-->
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 <style type="text/css">
   html, body { height: 100%; margin: 0; padding: 0; }
   #map { height: 50%; width: 30%}
@@ -11,16 +17,36 @@
 {% end %}
 
 {% block body %}
+
+<div class="container" style="height:100%; width:100%;">
+
+<header class="uploadfile">
+<h1><span class="em-word">U</span>pload <span class="em-word">F</span>ile</h1>
+</header>
+
+
+
 <form method=post enctype='multipart/form-data' action='/present/submit/{{ present_id }}'>
   {% module xsrf_form_html() %}
-  <input type='text' name='title' placeholder='Presentation Title(Option)' value='{{ title }}'/><br>
-  <input type='text' name='owner' placeholder='Owner(Option)' value='{{ owner }}'/><br>
-  <input type='file' name='presentation'/><br>
+
+  <div class="input-group">
+  <input type="text" class="form-control" aria-describedby="basic-addon1" name='title' placeholder='Presentation Title(Option)' value='{{ title }}'/><br>
+  <input type="text" class="form-control" aria-describedby="basic-addon1" name='owner' placeholder='Owner(Option)' value='{{ owner }}'/><br>
+
+  <input type='file' name='presentation'><img src="/static/image/select.png" height="41" width="130"></input>
+  <br>
+
   <input type='text' name='lat' id='lat' value='0' hidden="true"></input>
   <input type='text' name='lng' id='lng' value='0' hidden="true"></input>
   <input type='submit'/><br>
+  </div>
+
 </form>
+
+
 <div id="map"></div>
+
+</div>
 
 <script>
 

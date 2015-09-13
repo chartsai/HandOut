@@ -109,3 +109,29 @@ body {
   float: right;
 }
 
+.uploadfile {
+  color: #2f3592;
+  text-align: center;
+  border-bottom: 7px solid #fef800;
+}
+
+.uploadfile h1 {
+  font-size: 70px;
+}
+
+.em-word {
+  color: #00b436;
+}
+
+#map {
+  margin: 10px auto;
+}
+
+input {
+  margin: 30px 20px;
+}
+
+
+
+
+
