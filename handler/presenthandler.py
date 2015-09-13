@@ -17,6 +17,7 @@ import shutil
 import subprocess
 import math
 import time
+import json
 from decimal import Decimal
 from threading import Thread
 # import mimetypes
@@ -40,11 +41,15 @@ def _get_float(s, default):
 EARTH_R = Decimal('6371009') # Meter
 RAD_K = Decimal.from_float(math.pi) / Decimal(180)
 
+DEFAULT_LAT = 25.0724763
+DEFAULT_LNG = 121.5185635
+
 class QueryPresentHandler(BaseHandler):
-    def get(self):
+    def get(self, api_type):
         # TODO: Get data
-        self.lat = RAD_K*Decimal.from_float(_get_float('25.0724763', Decimal(0)))
-        self.lng = RAD_K*Decimal.from_float(_get_float('121.5185635', Decimal(0)))
+
+        self.lat = RAD_K * Decimal.from_float(_get_float(self.get_argument('lat', ''), DEFAULT_LAT))
+        self.lng = RAD_K * Decimal.from_float(_get_float(self.get_argument('lng', ''), DEFAULT_LNG))
 
         # TODO: Query out less point
         presents = self.sql_session.query(Presentation).all()
@@ -52,7 +57,27 @@ class QueryPresentHandler(BaseHandler):
             lat2 = RAD_K*presents[i].lat
             lng2 = RAD_K*presents[i].lng
             presents[i].distance_string = self._distance_string(lat2, lng2)
-        self.render('querypresent.html', presents = presents)
+        if api_type == None:
+            self.render('querypresent.html', presents = presents)
+        elif api_type[1:] == 'json':
+            return_data = []
+            for present in presents:
+                upload_file = FileList.by_present_id(present.p_key, self.sql_session).scalar()
+                file_url = '/download/' + upload_file.key + '/' + upload_file.filename + '.' + upload_file.file_type
+
+                return_data.append({
+                    'title': present.title,
+                    'owner': present.owner,
+                    'distance': present.distance_string,
+                    'created': present.created.strftime("%Y-%m-%d %H:%M"),
+                    'updated': present.updated.strftime("%Y-%m-%d %H:%M"),
+                    'file_url': file_url,
+                    'lat': str(present.lat),
+                    'lng': str(present.lng)}
+                )
+            self.write(json.dumps(return_data))
+        else:
+            raise self.HTTPError(500, 'Unknown api type')
 
     def _distance_string(self, lat2, lng2):
         a = abs(self.lat - lat2)
@@ -187,7 +212,7 @@ class SubmitPresentHandler(BaseHandler):
 
             self.sql_session.add(new_file)
 
-            
+
 
         self.sql_session.commit()
         self.redirect('/present/%s' % present_id)

@@ -54,7 +54,7 @@ def make_app():
             # (r'/signup/?', handler.SignupHandler),
 
             # Query Presentation
-            (r'/present/?', handler.QueryPresentHandler),
+            (r'(/json)?/present/?', handler.QueryPresentHandler),
             # View Presentation
             (r'/present(?:/([0-9]+))?/?', handler.ViewPresentHandler),
             # Submit new or exist Presentation

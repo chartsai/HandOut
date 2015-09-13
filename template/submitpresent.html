@@ -30,7 +30,9 @@
 
   <div class="input-group">
   
-  <input type='file' name='presentation'></input> 
+  <!-- BUG IS HERE ~~~~~ -->
+  <a class="minusdefault">
+  <input type='file' class="custom-file-input" name='presentation'></input></a>
 
   <input style="width:400px; height:40px;" type="text" class="form-control" aria-describedby="basic-addon1" name='title' placeholder='Presentation Title(Option)' value='{{ title }}'/><br>
   <input style="width:400px; height:40px;" type="text" class="form-control" aria-describedby="basic-addon1" name='owner' placeholder='Owner(Option)' value='{{ owner }}'/><br>
