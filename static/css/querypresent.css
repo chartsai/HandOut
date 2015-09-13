@@ -1,0 +1,35 @@
+
+.container {
+	margin: 0px auto;
+}
+
+header {
+	text-align: center;
+	border-bottom: 7px solid #fef800;
+	padding: 20px 0px;
+	margin-bottom: 20px;
+}
+
+h1 {
+	color: #2f3592;
+	
+	font-size: 70px;
+}
+
+.em-word {
+	color: #00b436;
+}
+
+.slidecase {
+	width: 32%;
+	height: 200px;
+	display: inline-block;
+
+	line-height: 35px;
+	text-align: center;
+
+	border: 5px solid gray;
+	border-radius: 5px;
+	margin: 10px 5px 30px 5px;
+}
+
