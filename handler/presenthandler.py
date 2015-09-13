@@ -61,7 +61,7 @@ class QueryPresentHandler(BaseHandler):
             if d < 1000:
                 present.distance_string = '%d m' % d
             elif d<=5000:
-                present.distance_string = '%.2f km' % float(d)/1000
+                present.distance_string = '%.2f km' % (float(d)/1000)
             else:
                 continue
             
