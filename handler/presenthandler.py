@@ -16,9 +16,13 @@ import uuid
 import shutil
 import subprocess
 import math
+import time
 from decimal import Decimal
+from threading import Thread
 # import mimetypes
 # from datetime import datetime
+
+import tornado.gen
 
 try:
     xrange
@@ -105,6 +109,7 @@ class SubmitPresentHandler(BaseHandler):
 
         self.render('submitpresent.html', **self.kw)
 
+    @tornado.gen.coroutine
     def post(self, present_id):
         self.kw['title'] = self.get_argument('title', 'Whatever')
         self.kw['owner'] = self.get_argument('owner', 'Whoever')
@@ -148,7 +153,7 @@ class SubmitPresentHandler(BaseHandler):
         # Add new ppt file
         if self.kw.get('presentation'):
             m = _file_type_re.match(self.kw['presentation']['filename'])
-            if not m or not (m.group(2) in ['pptx','ppt']):
+            if not m or not (m.group(2) in ['pptx','ppt','pdf','odp']):
                 raise self.HTTPError(400)
             self.kw['presentation']['key'] = uuid.uuid1().hex
             self.kw['presentation']['filename'] = m.group(1)
@@ -164,9 +169,35 @@ class SubmitPresentHandler(BaseHandler):
             with open(real_file_name, 'wb') as f:
                 f.write(self.kw['presentation']['body'])
             # Convert ppt or pptx to odp
-            subprocess.call('unoconv -f odp \'%s\'' % real_file_name, shell=True)
+            if m.group(2) != 'odp':
+                cmd_thread = _async_command('unoconv -f odp \'%s\'' % real_file_name)
+                cmd_thread.start()
+                while not cmd_thread.end:
+                    print('GG')
+                    yield tornado.gen.Task(tornado.ioloop.IOLoop.instance().add_timeout, time.time() + 1)
+                # subprocess.call('unoconv -f odp \'%s\'' % real_file_name, shell=True)
+            if m.group(2) != 'pdf':
+                cmd_thread = _async_command('unoconv -f pdf \'%s\'' % real_file_name)
+                cmd_thread.start()
+                while not cmd_thread.end:
+                    print('GG2')
+                    yield tornado.gen.Task(tornado.ioloop.IOLoop.instance().add_timeout, time.time() + 1)
+                # subprocess.call('unoconv -f pdf \'%s\'' % real_file_name, shell=True)
 
             self.sql_session.add(new_file)
 
+            
+
         self.sql_session.commit()
         self.redirect('/present/%s' % present_id)
+
+
+class _async_command(Thread):
+    def __init__(self, cmd):
+        Thread.__init__(self)
+        self.cmd = cmd
+        self.end = False
+        self.setName(cmd)
+    def run(self):
+        subprocess.call(self.cmd, shell=True)
+        self.end = True
