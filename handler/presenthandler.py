@@ -37,6 +37,13 @@ class ViewPresentHandler(BaseHandler):
 
 _file_type_re = re.compile(r'^(.*)[.](.*)$')
 
+def _get_float(s, default):
+    try:
+        f = float(s)
+    except ValueError:
+        return default
+    return f
+
 class SubmitPresentHandler(BaseHandler):
     def initialize(self):
         super(SubmitPresentHandler, self).initialize()
@@ -71,8 +78,8 @@ class SubmitPresentHandler(BaseHandler):
     def post(self, present_id):
         self.kw['title'] = self.get_argument('title', 'Whatever')
         self.kw['owner'] = self.get_argument('owner', 'Whoever')
-        self.kw['lat'] = self.get_argument('lat', 0.0)
-        self.kw['lng'] = self.get_argument('lng', 0.0)
+        self.kw['lat'] = _get_float(self.get_argument('lat', '0.0'), 0.0)
+        self.kw['lng'] = _get_float(self.get_argument('lng', '0.0'), 0.0)
         if self.request.files.get('presentation'):
             self.kw['presentation'] = self.request.files['presentation'][0]
 
