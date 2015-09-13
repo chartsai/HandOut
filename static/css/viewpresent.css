@@ -4,14 +4,17 @@
 
  header {
  	border-bottom: 7px solid #fef800;
+ 	margin-bottom: 20px;
  }
 
  h1 {
 	font-size: 70px;
 	color: #2f3592;
+	display: inline-block;
  }
 
  h3 {
  	margin-bottom: 10px;
  	color: #2f3592;
+ 	display: inline-block;
  }
