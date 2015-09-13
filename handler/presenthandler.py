@@ -57,9 +57,9 @@ class QueryPresentHandler(BaseHandler):
         d = EARTH_R*Decimal.from_float(s)
         d_i = d.to_integral()
         if d_i < 1000:
-            return '%d m' % d_i
+            return ('%d m' % d_i)
         else :
-            return '%s km' % float(d_i/100)/10
+            return ('%.2f km' % (float(d_i/1000)))
 
 
 class ViewPresentHandler(BaseHandler):
