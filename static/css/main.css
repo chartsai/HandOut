@@ -1,16 +1,3 @@
-/* Space out content a bit */
-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-right: 15px;
-  padding-left: 15px;
-}
 
 /* Custom page header */
 .header {
@@ -164,8 +151,6 @@ input[type=file] {
   background-image: url("/static/image/select.png");
   width: 130px;
   height: 41px;
-  position: relative;
-  top: -40px;
 }
 
 

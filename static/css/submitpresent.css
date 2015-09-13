@@ -1,21 +1,8 @@
 
 /* Custom page header */
 .header {
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #e5e5e5;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-}
-
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
 }
 
 /* Customize container */
@@ -27,24 +14,6 @@
   margin: 30px 0;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  padding: 14px 24px;
-  font-size: 21px;
-}
-
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
-}
-
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
@@ -54,46 +23,6 @@
     padding-right: 0;
     padding-left: 0;
   }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
-
-}
-
-.btndiv {
-  margin: 80px auto 80px auto;
-}
-
-.btndesign {
-  display: inline-block;
-  width: 49%;
-}
-
-.btnstyle {
-  display: inline-block;
-  width: 49%;
-  text-align: center;
-}
-
-.jumbo {
-  text-align: center;
-}
-
-.logodesign {
-  margin-top: 70px;
-}
-
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
 }
 
 .uploadfile {
@@ -107,7 +36,7 @@
 
 h2.headstyle {
   font-size: 35px;
-  margin-top: 45px;
+  margin-top: 40px;
 }
 
 h1.headstyle {
@@ -125,7 +54,15 @@ h1.headstyle {
 }
 
 input {
-  margin: 30px 20px;
+  margin: 15px 20px;
+}
+
+input[type=file] {
+  background-image: url("/static/image/select.png");
+  width: 130px;
+  height: 41px;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 input[type=submit] {
@@ -136,22 +73,19 @@ input[type=submit] {
   float: right;
   position: relative;
   top: 150px;
-  left: 30px;
+
 }
 
 input[type=text] {
   padding:5px; border:2px solid #ccc;
   color: #616161;
   background-color: #e1e5f0;
--webkit-border-radius: 5px;
-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  width: 100%;
 }
 
-input[type=file] {
-  background-image: url("/static/image/select.png");
-  width: 130px;
-  height: 41px;
-}
+
 
 
 
