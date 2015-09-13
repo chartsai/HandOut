@@ -2,16 +2,31 @@
 
 {% block head %}
 <!-- TODO head-->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/querypresent.css">
 
 {% end %}
 
 {% block body %}
+
+
+<div class="container">
+	<header>
+	<h1><span class="em-word">N</span>earby <span class="em-word">P</span>resentation</h1>
+	</header>
+
   {% for i in presents %}
 	
-	<div>
+	<div class="slidecase">
     <a href="/present/{{i.p_key}}">
-    <h3>Title: {{i.title}} Owner: {{i.owner}}</h3></a>
+    <h3>Title: {{i.title}} <br /> Owner: {{i.owner}}</h3></a>
     </div>
     
   {% end %}
+</div>
+
+
 {% end %}
