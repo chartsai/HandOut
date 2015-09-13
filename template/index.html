@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="/static/js/app.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -18,7 +19,7 @@
 			<img alt="logo" class="logodesign" src="/static/image/logo.png" />
 
 			<div class="btndiv">
-				<p class="btndesign"><a href="present" class="left"><img src="/static/image/join.png" height="74" width="173"></a></p>
+				<p class="btndesign"><a href="/present" class="left" id="join"><img src="/static/image/join.png" height="74" width="173"></a></p>
 				<p class="btndesign"><a href="/present/submit" class="right"><img src="../static/image/new.png" height="74" width="179"></a></p>
 			</div>
 			</div>
@@ -33,5 +34,20 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+		<script>
+			function updateLatLng(lat, lng) {
+				// updateLatLng
+				document.getElementById('join').href="/present?lat="+lat+"&lng"+lng;
+				console.debug(lat + "," + lng);
+			}
+
+			getLocation(function(position){
+				var lat = position.coords.latitude;
+		    var lng = position.coords.longitude;
+				updateLatLng(lat, lng);
+			});
+
+		</script>
 </body>
 </html>
