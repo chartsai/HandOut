@@ -5,7 +5,7 @@
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<link rel="stylesheet" type="text/css" href="/static/css/submitpresent.css">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
@@ -30,17 +30,22 @@
   {% module xsrf_form_html() %}
 
   <div class="input-group">
+  
+  <div style="width=100%; height:100%;">
+  <input type='file' name='presentation'></input> 
   <input style="width:50%; height:40px;" type="text" class="form-control" aria-describedby="basic-addon1" name='title' placeholder='Presentation Title(Option)' value='{{ title }}'/><br>
   <input style="width:50%; height:40px;" type="text" class="form-control" aria-describedby="basic-addon1" name='owner' placeholder='Owner(Option)' value='{{ owner }}'/><br>
-
-  <input type='file' name='presentation'></input>
-  <br>
-
   <input type='text' name='lat' id='lat' value='0' hidden="true"></input>
   <input type='text' name='lng' id='lng' value='0' hidden="true"></input>
+  </div>
+
+
   <h2 class="headstyle"><span class="em-word">P</span>redicted <span class="em-word">L</span>ocation</h2>
+
+  <div style="width=100%; height:100%;">
   <div id="map" style="width:700px; height:300px;"></div>
   <input type='submit' value=''/><br>
+  </div>
   </div>
 
 </form>
