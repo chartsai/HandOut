@@ -6,7 +6,7 @@
 }
 
 /* Customize container */
-  .container {
+.container {
     max-width: 1000px;
   }
 
@@ -61,8 +61,16 @@ input[type=file] {
   background-image: url("/static/image/select.png");
   width: 130px;
   height: 41px;
-  margin-bottom: 0;
+  margin-bottom: 50px;
   padding-bottom: 0;
+  opacity: 0;
+}
+
+.minusdefault {
+  background-image: url("/static/image/select.png");
+  display: block;
+  width: 130px;
+  height: 41px;
 }
 
 input[type=submit] {
@@ -85,6 +93,9 @@ input[type=text] {
   width: 100%;
 }
 
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
 
 
 
