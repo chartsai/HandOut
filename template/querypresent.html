@@ -7,6 +7,15 @@
 
 {% block body %}
   {% for i in presents %}
+<<<<<<< HEAD
     <a href="/present/{{i.p_key}}"><h3>Title: {{i.title}} Owner: {{i.owner}} Distance: {{i.distance}}</h3></a>
+=======
+	
+	<div>
+    <a href="/present/{{i.p_key}}">
+    <h3>Title: {{i.title}} Owner: {{i.owner}}</h3></a>
+    </div>
+    
+>>>>>>> f5d72b0... add querypresent.css file
   {% end %}
 {% end %}
