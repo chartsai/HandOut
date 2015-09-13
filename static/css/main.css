@@ -33,7 +33,7 @@ body {
 
 /* Customize container */
   .container {
-    max-width: 800px;
+    max-width: 1000px;
   }
 
 .container-narrow > hr {
@@ -124,12 +124,43 @@ body {
 }
 
 #map {
-  margin: 10px auto;
+  margin: 10px 0px;
+  float: left;
 }
 
 input {
   margin: 30px 20px;
 }
+
+input[type=submit] {
+  background-image: url("/static/image/uploadfile.png");
+  width: 148px;
+  height: 88px;
+  border:0 none;
+  position: relative;
+  top: 150px;
+  left: 50px;
+}
+
+input[type=text] {
+  padding:5px; border:2px solid #ccc;
+  width: 500px;
+  color: #616161;
+  background-color: #e1e5f0;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
