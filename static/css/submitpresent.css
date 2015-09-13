@@ -57,22 +57,6 @@ input {
   margin: 15px 20px;
 }
 
-input[type=file] {
-  background-image: url("/static/image/select.png");
-  width: 130px;
-  height: 41px;
-  margin-bottom: 50px;
-  padding-bottom: 0;
-  opacity: 0;
-}
-
-.minusdefault {
-  background-image: url("/static/image/select.png");
-  display: block;
-  width: 130px;
-  height: 41px;
-}
-
 input[type=submit] {
   background-image: url("/static/image/uploadfile.png");
   width: 148px;
@@ -93,9 +77,6 @@ input[type=text] {
   width: 100%;
 }
 
-.custom-file-input::-webkit-file-upload-button {
-  visibility: hidden;
-}
 
 
 

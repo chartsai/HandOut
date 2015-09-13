@@ -20,13 +20,22 @@
 
   {% for i in presents %}
 	
-	<div class="slidecase">
+
+	   <!-- <div class="slidecase" style="background-image: url('{{i.img_url}}');"> -->
+
+
+    <div class="slidecase">
+    <img class="layerdown" width="100%" src="{{i.img_url}}">
+    <div class="layerup">
     <a href="/present/{{i.p_key}}"><h3>
     	Title: {{i.title}} <br />
     	Owner: {{i.owner}} <br />
 		Distance: {{i.distance_string}}
     </h3></a>
     </div>
+    </div>
+
+
     
   {% end %}
 </div>

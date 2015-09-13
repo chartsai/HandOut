@@ -21,15 +21,44 @@ h1 {
 }
 
 .slidecase {
-	width: 32%;
+	position: relative;
+	width: 330px;
 	height: 200px;
 	display: inline-block;
 
 	line-height: 35px;
 	text-align: center;
 
+	margin: 10px 5px 30px 5px;
+
+	background-size: 330px 200px;
+}
+
+img.layerdown {
+	width: 330px;
+	height: 200px;
+	z-index: 0;
+	position: relative;
+	top: 0;
+	left: 0;
+	opacity: 0.5;
 	border: 5px solid gray;
 	border-radius: 5px;
-	margin: 10px 5px 30px 5px;
 }
+
+div.layerup {
+	z-index: 1;
+	position: relative;
+	top: -200px;
+	left: 0;
+}
+
+
+
+
+
+
+
+
+
 
