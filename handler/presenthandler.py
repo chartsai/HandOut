@@ -33,7 +33,7 @@ def _get_float(s, default):
         return default
     return f
 
-EARTH_R = Decimal('6378.137')
+EARTH_R = Decimal('6371009') # Meter
 RAD_K = Decimal.from_float(math.pi) / Decimal(180)
 
 class QueryPresentHandler(BaseHandler):
@@ -42,18 +42,24 @@ class QueryPresentHandler(BaseHandler):
         self.lat = RAD_K*Decimal.from_float(_get_float('25.0724763', Decimal(0)))
         self.lng = RAD_K*Decimal.from_float(_get_float('121.5185635', Decimal(0)))
 
+        # TODO: Query out less point
         presents = self.sql_session.query(Presentation).all()
         for i in xrange(len(presents)):
             lat2 = RAD_K*presents[i].lat
             lng2 = RAD_K*presents[i].lng
-            presents[i].distance = self._distance(lat2, lng2)
+            presents[i].distance_string = self._distance_string(lat2, lng2)
         self.render('querypresent.html', presents = presents)
 
-    def _distance(self, lat2, lng2):
+    def _distance_string(self, lat2, lng2):
         a = abs(self.lat - lat2)
         b = abs(self.lng - lng2)
         s = 2*math.asin(math.sqrt(math.pow(math.sin(a/2),2)+math.cos(self.lat)*math.cos(lat2)*math.pow(math.sin(b/2),2)))
-        return EARTH_R*Decimal.from_float(s)
+        d = EARTH_R*Decimal.from_float(s)
+        d_i = d.to_integral()
+        if d_i < 1000:
+            return '%d m' % d_i
+        else :
+            return '%s km' % float(d_i/100)/10
 
 
 class ViewPresentHandler(BaseHandler):
