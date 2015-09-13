@@ -5,7 +5,7 @@
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+<link rel="stylesheet" type="text/css" href="/static/css/submitpresent.css">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
@@ -20,38 +20,35 @@
 
 <div class="container" style="height:100%; width:100%;">
 
-<header class="uploadfile">
-<h1 class="headstyle"><span class="em-word">U</span>pload <span class="em-word">F</span>ile</h1>
-</header>
+  <header class="uploadfile">
+  <h1 class="headstyle"><span class="em-word">U</span>pload <span class="em-word">F</span>ile</h1>
+  </header>
 
+  <form method=post enctype='multipart/form-data' action='/present/submit/{{ present_id }}'>
 
-
-<form method=post enctype='multipart/form-data' action='/present/submit/{{ present_id }}'>
   {% module xsrf_form_html() %}
 
   <div class="input-group">
-  <input style="width:50%; height:40px;" type="text" class="form-control" aria-describedby="basic-addon1" name='title' placeholder='Presentation Title(Option)' value='{{ title }}'/><br>
-  <input style="width:50%; height:40px;" type="text" class="form-control" aria-describedby="basic-addon1" name='owner' placeholder='Owner(Option)' value='{{ owner }}'/><br>
+  
+  <input type='file' name='presentation'></input> 
 
-  <input type='file' name='presentation'></input>
-  <br>
-
+  <input style="width:400px; height:40px;" type="text" class="form-control" aria-describedby="basic-addon1" name='title' placeholder='Presentation Title(Option)' value='{{ title }}'/><br>
+  <input style="width:400px; height:40px;" type="text" class="form-control" aria-describedby="basic-addon1" name='owner' placeholder='Owner(Option)' value='{{ owner }}'/><br>
   <input type='text' name='lat' id='lat' value='0' hidden="true"></input>
   <input type='text' name='lng' id='lng' value='0' hidden="true"></input>
-  <h2 class="headstyle"><span class="em-word">P</span>redicted <span class="em-word">L</span>ocation</h2>
-  <div id="map" style="width:700px; height:300px;"></div>
-  <input type='submit'/><br>
   </div>
 
-</form>
+  <div style="width=100%; height:100%;">
+  <h2 class="headstyle"><span class="em-word">P</span>redicted <span class="em-word">L</span>ocation</h2>
 
+  <div id="map" style="width:700px; height:300px;"></div>
+  <input type='submit' value=''/><br>
+  </div>
 
-
-
+  </form>
 </div>
 
 <script src='/static/js/submitpresent.js'></script>
-
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAJWANy1vD0TcPFB0X5bX3Vi4Qyi4bYPw&callback=initMap" >
 </script>

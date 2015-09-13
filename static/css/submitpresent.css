@@ -1,0 +1,101 @@
+
+/* Custom page header */
+.header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+  .container {
+    max-width: 1000px;
+  }
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.uploadfile {
+  text-align: center;
+  border-bottom: 7px solid #fef800;
+}
+
+.headstyle {
+  color: #2f3592;
+}
+
+h2.headstyle {
+  font-size: 35px;
+  margin-top: 40px;
+}
+
+h1.headstyle {
+  font-size: 70px;
+  margin-top: 25px;
+}
+
+.em-word {
+  color: #00b436;
+}
+
+#map {
+  margin: 10px 0px;
+  float: left;
+}
+
+input {
+  margin: 15px 20px;
+}
+
+input[type=file] {
+  background-image: url("/static/image/select.png");
+  width: 130px;
+  height: 41px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+input[type=submit] {
+  background-image: url("/static/image/uploadfile.png");
+  width: 148px;
+  height: 88px;
+  border:0 none;
+  float: right;
+  position: relative;
+  top: 150px;
+
+}
+
+input[type=text] {
+  padding:5px; border:2px solid #ccc;
+  color: #616161;
+  background-color: #e1e5f0;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
