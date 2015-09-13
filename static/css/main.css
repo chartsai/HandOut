@@ -110,13 +110,22 @@ body {
 }
 
 .uploadfile {
-  color: #2f3592;
   text-align: center;
   border-bottom: 7px solid #fef800;
 }
 
-.uploadfile h1 {
+.headstyle {
+  color: #2f3592;
+}
+
+h2.headstyle {
+  font-size: 35px;
+  margin-top: 45px;
+}
+
+h1.headstyle {
   font-size: 70px;
+  margin-top: 25px;
 }
 
 .em-word {
@@ -137,22 +146,27 @@ input[type=submit] {
   width: 148px;
   height: 88px;
   border:0 none;
+  float: right;
   position: relative;
   top: 150px;
-  left: 50px;
+  left: 30px;
 }
 
 input[type=text] {
   padding:5px; border:2px solid #ccc;
-  width: 500px;
   color: #616161;
   background-color: #e1e5f0;
 -webkit-border-radius: 5px;
 border-radius: 5px;
 }
 
-
-
+input[type=file] {
+  background-image: url("/static/image/select.png");
+  width: 130px;
+  height: 41px;
+  position: relative;
+  top: -40px;
+}
 
 
 
