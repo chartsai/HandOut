@@ -15,14 +15,51 @@ import os
 import uuid
 import shutil
 import subprocess
+import math
+from decimal import Decimal
 # import mimetypes
 # from datetime import datetime
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
+
+def _get_float(s, default):
+    try:
+        f = float(s)
+    except ValueError:
+        return default
+    return f
+
+EARTH_R = Decimal('6371009') # Meter
+RAD_K = Decimal.from_float(math.pi) / Decimal(180)
 
 class QueryPresentHandler(BaseHandler):
     def get(self):
+        # TODO: Get data
+        self.lat = RAD_K*Decimal.from_float(_get_float('25.0724763', Decimal(0)))
+        self.lng = RAD_K*Decimal.from_float(_get_float('121.5185635', Decimal(0)))
+
+        # TODO: Query out less point
         presents = self.sql_session.query(Presentation).all()
+        for i in xrange(len(presents)):
+            lat2 = RAD_K*presents[i].lat
+            lng2 = RAD_K*presents[i].lng
+            presents[i].distance_string = self._distance_string(lat2, lng2)
         self.render('querypresent.html', presents = presents)
+
+    def _distance_string(self, lat2, lng2):
+        a = abs(self.lat - lat2)
+        b = abs(self.lng - lng2)
+        s = 2*math.asin(math.sqrt(math.pow(math.sin(a/2),2)+math.cos(self.lat)*math.cos(lat2)*math.pow(math.sin(b/2),2)))
+        d = EARTH_R*Decimal.from_float(s)
+        d_i = d.to_integral()
+        if d_i < 1000:
+            return ('%d m' % d_i)
+        else :
+            return ('%.2f km' % (float(d_i/1000)))
 
 
 class ViewPresentHandler(BaseHandler):
@@ -36,13 +73,6 @@ class ViewPresentHandler(BaseHandler):
 
 
 _file_type_re = re.compile(r'^(.*)[.](.*)$')
-
-def _get_float(s, default):
-    try:
-        f = float(s)
-    except ValueError:
-        return default
-    return f
 
 class SubmitPresentHandler(BaseHandler):
     def initialize(self):

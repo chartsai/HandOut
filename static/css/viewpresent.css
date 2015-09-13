@@ -1,0 +1,17 @@
+ .container {
+	text-align: center;
+ }
+
+ header {
+ 	border-bottom: 7px solid #fef800;
+ }
+
+ h1 {
+	font-size: 70px;
+	color: #2f3592;
+ }
+
+ h3 {
+ 	margin-bottom: 10px;
+ 	color: #2f3592;
+ }
